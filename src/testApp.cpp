@@ -23,18 +23,14 @@ void testApp::update()
 		ofxOscMessage m;
 		receiver.getNextMessage(&m);
         
-		// check for mouse moved message
-		if(m.getAddress() == "/tweetData"){
-			// both the arguments are int32's
+		
+		if(m.getAddress() == "/tweetData")
+        {
 			ps->addParticle(m.getArgAsString(0), m.getArgAsString(1));
 		}
     }
     
-    //if(ofGetFrameNum() % 60 == 0){
-    // ps->addParticle("tweetText", "@tweetName");
-    //}
-    
-    ofPoint gravity = *new ofPoint(0,0.01);
+    ofPoint gravity = *new ofPoint(0,0.001);
     ps->applyForce(gravity);
     
     ps->update();
