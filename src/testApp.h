@@ -2,7 +2,9 @@
 
 #include "ofMain.h"
 #include "ParticleSystem.h"
+#include "ofxOsc.h"
 
+#define PORT 12345
 
 class testApp : public ofBaseApp{
 
@@ -22,5 +24,6 @@ class testApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
         ParticleSystem * ps;
+        ofxOscReceiver receiver;
     
 };

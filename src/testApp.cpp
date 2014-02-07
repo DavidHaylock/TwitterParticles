@@ -4,6 +4,8 @@
 void testApp::setup()
 {
 
+    receiver.setup(PORT);
+    
     ofSetFrameRate(60);
     ofBackground(0);
     
@@ -14,11 +16,24 @@ void testApp::setup()
 //--------------------------------------------------------------
 void testApp::update()
 {
-    if(ofGetFrameNum() % 60 == 0){
+    
+    // check for waiting messages
+	while(receiver.hasWaitingMessages()){
+		// get the next message
+		ofxOscMessage m;
+		receiver.getNextMessage(&m);
         
-        ps->addParticle("tweetText", "@tweetName");
-        
+		// check for mouse moved message
+		if(m.getAddress() == "/tweetData"){
+			// both the arguments are int32's
+			ps->addParticle(m.getArgAsString(0), m.getArgAsString(1));
+		}
     }
+    
+    //if(ofGetFrameNum() % 60 == 0){
+    // ps->addParticle("tweetText", "@tweetName");
+    //}
+    
     ofPoint gravity = *new ofPoint(0,0.01);
     ps->applyForce(gravity);
     
